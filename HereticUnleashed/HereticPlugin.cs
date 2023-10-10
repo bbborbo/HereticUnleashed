@@ -306,49 +306,56 @@ namespace HereticUnchained
         {
             ILCursor c = new ILCursor(il);
 
-            int regenLocation = 54;
+            //int regenLocation = 66;
 
+            //go to regen section
             c.GotoNext(MoveType.After,
                 x => x.MatchLdarg(0),
                 x => x.MatchLdfld<CharacterBody>("baseRegen"),
                 x => x.MatchLdarg(0),
                 x => x.MatchLdfld<CharacterBody>("levelRegen")
                 );
-            c.GotoNext(MoveType.After,
-                x => x.MatchStloc(out regenLocation)
-                );
 
-            int regenMultLocation = 60;
-            int endRegenLocation = 61;
+            int regenMultLocation = 72;
+            int endRegenLocation = 73;
 
             c.GotoNext(MoveType.After,
-                x => x.MatchLdcR4(0),
+                x => x.MatchLdcR4(1),
                 x => x.MatchStloc(out regenMultLocation)
                 );
-            c.GotoNext(MoveType.Before,
-                x => x.MatchLdloc(regenMultLocation) //removed
-                );
-            c.Remove();
-            c.Emit(OpCodes.Ldc_R4, 1.0f);
-            return;
-
             endRegenLocation = regenMultLocation + 1;
-            c.GotoNext(MoveType.Before,
-                x => x.MatchStloc(endRegenLocation),
-                x => x.MatchLdloc(endRegenLocation)
+            Debug.LogWarning("2r4r asdjsadnfgjsdagndfjgndefgn" + regenMultLocation);
+
+            c.GotoNext(MoveType.After,
+                /*x => x.MatchLdloc(regenMultLocation),
+                x => x.MatchMul(),*/
+                x => x.MatchStloc(endRegenLocation)
                 );
-            c.Index++;
+
             c.Emit(OpCodes.Ldloc, endRegenLocation);
             c.Emit(OpCodes.Ldloc, regenMultLocation);
             c.Emit(OpCodes.Ldarg_0);
             c.EmitDelegate<Func<float, float, CharacterBody, float>>((currentRegen, regenMult, body) =>
             {
-                float levelRegen = body.baseRegen + body.levelRegen * (body.level - 1);
-                float extraRegen = currentRegen - levelRegen;
-                float endRegen = (levelRegen + Mathf.Abs(levelRegen) * (regenMult - 1)) + (extraRegen * regenMult);
+                if (body.HasBuff(RoR2Content.Buffs.AffixEcho) || body.HasBuff(DLC1Content.Buffs.EliteEarth))
+                    return 0;
 
-                if (body.HasBuff(RoR2Content.Buffs.AffixEcho))
-                    endRegen = 0;
+                //calculate base regen/before items
+                float bodyRegen = body.baseRegen + body.levelRegen * (body.level - 1);
+
+                //subtract base regen from the calculated total to get the bonus regen
+                float extraRegen = (currentRegen / regenMult) - bodyRegen;
+
+                //end regen accomodating for negative regen using absolute value
+                float endRegen = (bodyRegen + Mathf.Abs(bodyRegen) * (regenMult - 1)) + (extraRegen * regenMult);
+
+                //for some stupid fucking reason the tonic regen buff is applied after all other stats so i have to accomodate for it separately and preemptively
+                //thanks hopooo
+                if (body.HasBuff(RoR2Content.Buffs.TonicBuff) && endRegen < 0)
+                {
+                    endRegen += Mathf.Abs(endRegen) * 3;
+                    endRegen /= 4;
+                }
 
                 return endRegen;
             });
@@ -531,7 +538,7 @@ namespace HereticUnchained
                 }
                 if (itemDef == RoR2Content.Items.LunarSecondaryReplacement)
                 {
-                    /*uint preference = GetSkillPreferenceFromLoadout(currentPlayerLoadout, (int)SkillSlot.Primary);
+                    uint preference = GetSkillPreferenceFromLoadout(currentPlayerLoadout, (int)SkillSlot.Primary);
                     switch (preference)
                     {
                         case 0:
@@ -539,11 +546,11 @@ namespace HereticUnchained
                             RoR2Content.Items.LunarSecondaryReplacement.descriptionToken = visionsLongDescriptionToken;
                             break;
                         case 1:
-                            string s = new BloodPrimarySkill().SkillLangTokenName;
+                            string s = new BloodSecondarySkill().SkillLangTokenName;
                             RoR2Content.Items.LunarSecondaryReplacement.pickupToken = SkillBase.Token + s + SkillBase.ShortDescToken;
                             RoR2Content.Items.LunarSecondaryReplacement.descriptionToken = SkillBase.Token + s + SkillBase.FullDescToken;
                             break;
-                    }*/
+                    }
                 }
                 if (itemDef == RoR2Content.Items.LunarUtilityReplacement)
                 {

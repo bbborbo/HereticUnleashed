@@ -330,6 +330,7 @@ namespace HereticUnchained
                 );
             c.Remove();
             c.Emit(OpCodes.Ldc_R4, 1.0f);
+            return;
 
             endRegenLocation = regenMultLocation + 1;
             c.GotoNext(MoveType.Before,
@@ -637,7 +638,7 @@ namespace HereticUnchained
                 Debug.Log("Heretic has no animator?");
             }
 
-            //IL.RoR2.CharacterBody.RecalculateStats += RegenMultiplierFix;
+            IL.RoR2.CharacterBody.RecalculateStats += RegenMultiplierFix;
             //On.RoR2.CharacterMaster.OnBodyStart += AddHereticItems;
             On.RoR2.CharacterMaster.Start += AddHeresyItems;
 

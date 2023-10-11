@@ -32,26 +32,27 @@ namespace HereticUnchained
     [BepInDependency(R2API.LanguageAPI.PluginGUID)]
     [BepInDependency(R2API.PrefabAPI.PluginGUID)]
     [BepInDependency(R2API.RecalculateStatsAPI.PluginGUID)]
+    [BepInDependency(R2API.ContentManagement.R2APIContentManager.PluginGUID)]
     [BepInPlugin(ModGUID, ModName, ModVer)]
     [BepInDependency("com.johnedwa.RTAutoSprintEx", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency("com.DestroyedClone.AncientScepter", BepInDependency.DependencyFlags.SoftDependency)]
-    [BepInDependency("com.Borbo.DuckSurvivorTweaks", BepInDependency.DependencyFlags.SoftDependency)]
+    [BepInDependency("com.HouseOfFruits.RiskierRain", BepInDependency.DependencyFlags.SoftDependency)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     [R2APISubmoduleDependency(nameof(LoadoutAPI), nameof(LanguageAPI), 
-        nameof(PrefabAPI), nameof(RecalculateStatsAPI))]
+        nameof(PrefabAPI), nameof(RecalculateStatsAPI), nameof(ContentAddition))]
     public class HereticPlugin : BaseUnityPlugin
     {
         public const string ModGUID = "com.Borbo.HereticUnchained";
         public const string ModName = "HereticUnchained";
-        public const string ModVer = "1.3.0";
+        public const string ModVer = "2.0.1";
 
         public static AssetBundle iconBundle = Tools.LoadAssetBundle(Properties.Resources.hereticunchained);
         public static string iconsPath = "Assets/HereticIcons/";
         public static string TokenName = "HERETICUNCHAINED_";
 
         public static bool isScepterLoaded = Tools.isLoaded("com.DestroyedClone.AncientScepter");
-        public static bool autosprintLoaded = Tools.isLoaded("com.johnedwa.RTAutoSprintEx");
-        public static bool isDstLoaded = Tools.isLoaded("com.Borbo.DuckSurvivorTweaks");
+        public static bool isAutosprintLoaded = Tools.isLoaded("com.johnedwa.RTAutoSprintEx");
+        public static bool is2R4RLoaded = Tools.isLoaded("com.HouseOfFruits.RiskierRain");
 
         internal static ConfigFile CustomConfigFile { get; set; }
 
@@ -70,15 +71,15 @@ namespace HereticUnchained
         public static SkillFamily specialFamily;
 
         public static ItemDef lunarPrimary;
-        public static ItemDef lunarSecondary;
-        public static ItemDef lunarUtility;
-        public static ItemDef lunarSpecial;
         public static string visionsShortDescriptionToken;
         public static string visionsLongDescriptionToken;
+        public static ItemDef lunarSecondary;
         public static string hooksShortDescriptionToken;
         public static string hooksLongDescriptionToken;
+        public static ItemDef lunarUtility;
         public static string stridesShortDescriptionToken;
         public static string stridesLongDescriptionToken;
+        public static ItemDef lunarSpecial;
         public static string essenceShortDescriptionToken;
         public static string essenceLongDescriptionToken;
 
@@ -166,7 +167,7 @@ namespace HereticUnchained
             InitializeSkills();
             InitializeScepterSkills();
 
-            new ContentPacks().Initialize();
+            //new ContentPacks().Initialize();
         }
 
         public void Start()
@@ -530,9 +531,14 @@ namespace HereticUnchained
                             RoR2Content.Items.LunarPrimaryReplacement.descriptionToken = visionsLongDescriptionToken;
                             break;
                         case 1:
-                            string s = new BloodPrimarySkill().SkillLangTokenName;
-                            RoR2Content.Items.LunarPrimaryReplacement.pickupToken = SkillBase.Token + s + SkillBase.ShortDescToken;
-                            RoR2Content.Items.LunarPrimaryReplacement.descriptionToken = SkillBase.Token + s + SkillBase.FullDescToken;
+                            string bloodName = new BloodPrimarySkill().SkillLangTokenName;
+                            RoR2Content.Items.LunarPrimaryReplacement.pickupToken = SkillBase.Token + bloodName + SkillBase.ShortDescToken;
+                            RoR2Content.Items.LunarPrimaryReplacement.descriptionToken = SkillBase.Token + bloodName + SkillBase.FullDescToken;
+                            break;
+                        case 2:
+                            string massName = new MassPrimarySkill().SkillLangTokenName;
+                            RoR2Content.Items.LunarPrimaryReplacement.pickupToken = SkillBase.Token + massName + SkillBase.ShortDescToken;
+                            RoR2Content.Items.LunarPrimaryReplacement.descriptionToken = SkillBase.Token + massName + SkillBase.FullDescToken;
                             break;
                     }
                 }

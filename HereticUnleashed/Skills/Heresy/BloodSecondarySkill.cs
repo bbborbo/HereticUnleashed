@@ -45,6 +45,7 @@ namespace HereticUnchained.Skills
 
         public override void Init(ConfigFile config)
         {
+            return;
             CreateLang();
             CreateSkill();
             Hooks();

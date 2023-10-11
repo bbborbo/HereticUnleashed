@@ -121,7 +121,7 @@ namespace HereticUnchained.Skills
                     skillDef.baseMaxStock = SkillData.baseMaxStock;
                     skillDef.baseRechargeInterval = SkillData.baseRechargeInterval;
                     skillDef.beginSkillCooldownOnSkillEnd = SkillData.beginSkillCooldownOnSkillEnd;
-                    skillDef.canceledFromSprinting = HereticPlugin.autosprintLoaded ? false : SkillData.canceledFromSprinting;
+                    skillDef.canceledFromSprinting = HereticPlugin.isAutosprintLoaded ? false : SkillData.canceledFromSprinting;
                     skillDef.cancelSprintingOnActivation = SkillData.cancelSprintingOnActivation;
                     skillDef.dontAllowPastMaxStocks = SkillData.dontAllowPastMaxStocks;
                     skillDef.fullRestockOnAssign = SkillData.fullRestockOnAssign;
@@ -178,7 +178,7 @@ namespace HereticUnchained.Skills
         public static bool RegisterEntityState(Type entityState)
         {
             //Check if the entity state has already been registered, is abstract, or is not a subclass of the base EntityState
-            if (CoreModules.ContentPacks.entityStates.Contains(entityState) || !entityState.IsSubclassOf(typeof(EntityStates.EntityState)) || entityState.IsAbstract)
+            if (/*CoreModules.ContentPacks.entityStates.Contains(entityState) ||*/ !entityState.IsSubclassOf(typeof(EntityStates.EntityState)) || entityState.IsAbstract)
             {
                 //LogCore.LogE(entityState.AssemblyQualifiedName + " is either abstract, not a subclass of an entity state, or has already been registered.");
                 //LogCore.LogI("Is Abstract: " + entityState.IsAbstract + " Is not Subclass: " + !entityState.IsSubclassOf(typeof(EntityState)) + " Is already added: " + EntityStateDefinitions.Contains(entityState));

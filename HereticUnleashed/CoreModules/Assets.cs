@@ -16,27 +16,32 @@ namespace HereticUnchained.CoreModules
         #region content pack
         public static void RegisterBodyPrefab(GameObject bodyPrefab)
         {
-            ContentPacks.bodyPrefabs.Add(bodyPrefab);
+            ContentAddition.AddBody(bodyPrefab);
+            //ContentPacks.bodyPrefabs.Add(bodyPrefab);
         }
-        public static void RegisterSkillFamily(SkillFamily skilLFamily)
+        public static void RegisterSkillFamily(SkillFamily skillFamily)
         {
-            ContentPacks.skillFamilies.Add(skilLFamily);
+            ContentAddition.AddSkillFamily(skillFamily);
+            //ContentPacks.skillFamilies.Add(skillFamily);
         }
         public static void RegisterSkillDef(SkillDef skillDef)
         {
-            ContentPacks.skillDefs.Add(skillDef);
+            ContentAddition.AddSkillDef(skillDef);
+            //ContentPacks.skillDefs.Add(skillDef);
         }
         public static void RegisterEntityState(Type entityState)
         {
-            ContentPacks.entityStates.Add(entityState);
+            ContentAddition.AddEntityState(entityState, out _);
         }
-        public static void RegisterSurvivorDef(SurvivorDef survivorDefs)
+        public static void RegisterSurvivorDef(SurvivorDef survivorDef)
         {
-            ContentPacks.survivorDefs.Add(survivorDefs);
+            ContentAddition.AddSurvivorDef(survivorDef);
+            //ContentPacks.survivorDefs.Add(survivorDef);
         }
         public static void RegisterNetworkedObjectPrefab(GameObject prefab)
         {
-            ContentPacks.networkedObjectPrefabs.Add(prefab);
+            ContentAddition.AddNetworkedObject(prefab);
+            //ContentPacks.networkedObjectPrefabs.Add(prefab);
         }
         public static EffectDef CreateEffect(GameObject effect)
         {
@@ -59,6 +64,7 @@ namespace HereticUnchained.CoreModules
                 Debug.LogErrorFormat("Effect prefab: \"{0}\" does not have a VFXAttributes component.", effect.name);
                 return null;
             }
+            ContentAddition.AddEffect(effect);
 
             var def = new EffectDef
             {
@@ -69,7 +75,7 @@ namespace HereticUnchained.CoreModules
                 spawnSoundEventName = effectComp.soundName
             };
 
-            ContentPacks.effectDefs.Add(def);
+            //ContentPacks.effectDefs.Add(def);
             return def;
         }
         #endregion

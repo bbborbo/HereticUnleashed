@@ -13,7 +13,7 @@ namespace HereticUnchained.Skills
         public static int baseMaxStock = 2;
         public static float baseRechargeInterval = 2;
 
-        public override string SkillName => ""; //splice
+        public override string SkillName => "Blind Allegiance"; //splice
 
         public override string SkillDescription => "Warp forward a short distance, splicing nearby enemies.";
 
@@ -44,7 +44,7 @@ namespace HereticUnchained.Skills
             interruptPriority = EntityStates.InterruptPriority.Any,
             baseMaxStock = baseMaxStock,
             baseRechargeInterval = baseRechargeInterval,
-            resetCooldownTimerOnUse = true,
+            resetCooldownTimerOnUse = false,
             mustKeyPress = true
         };
 
@@ -55,9 +55,10 @@ namespace HereticUnchained.Skills
 
         public override void Init(ConfigFile config)
         {
-            //CreateLang();
-            //CreateSkill();
-            //Hooks();
+            return;
+            CreateLang();
+            CreateSkill();
+            Hooks();
         }
     }
 }

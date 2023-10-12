@@ -20,6 +20,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using NegativeRegenFix;
+using HereticUnchained.SurvivorTweaks;
 
 #pragma warning disable CS0618 // Type or member is obsolete
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
@@ -108,6 +109,7 @@ namespace HereticUnchained
             InitializePrefab();
             InitializeSkins();
             CreateSkillFamilies(hereticPrefab);
+            HereticTweaks.Init();
 
             hereticSurvivorDef = Survivors.RegisterNewSurvivor(new Survivors.SurvivorDefInfo
             {

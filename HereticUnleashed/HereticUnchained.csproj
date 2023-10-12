@@ -49,6 +49,9 @@
     <Reference Include="AncientScepter">
       <HintPath>libs\AncientScepter.dll</HintPath>
     </Reference>
+    <Reference Include="NegativeRegenFix">
+      <HintPath>libs\NegativeRegenFix.dll</HintPath>
+    </Reference>
     <Reference Include="Decalicious">
       <HintPath>libs\Decalicious.dll</HintPath>
     </Reference>

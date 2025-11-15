@@ -134,7 +134,6 @@ namespace HereticUnchained.Skills
                     skillDef.stockToConsume = SkillData.stockToConsume;
                     #endregion
 
-
                     CoreModules.Assets.RegisterSkillDef(skillDef);
                     Array.Resize(ref skillFamily.variants, skillFamily.variants.Length + 1);
                     skillFamily.variants[skillFamily.variants.Length - 1] = new SkillFamily.Variant

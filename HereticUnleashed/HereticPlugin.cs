@@ -47,7 +47,7 @@ namespace HereticUnchained
     {
         public const string ModGUID = "com.Borbo.HereticUnchained";
         public const string ModName = "HereticUnchained";
-        public const string ModVer = "2.0.1";
+        public const string ModVer = "2.0.2";
 
         public static AssetBundle iconBundle = Tools.LoadAssetBundle(Properties.Resources.hereticunchained);
         public static string iconsPath = "Assets/HereticIcons/";
@@ -109,7 +109,6 @@ namespace HereticUnchained
             InitializePrefab();
             InitializeSkins();
             CreateSkillFamilies(hereticPrefab);
-            HereticTweaks.Init();
 
             hereticSurvivorDef = Survivors.RegisterNewSurvivor(new Survivors.SurvivorDefInfo
             {
@@ -121,7 +120,7 @@ namespace HereticUnchained
                 outroFlavorToken = "HERETIC_OUTRO_FLAVOR",
                 mainEndingEscapeFailureFlavorToken = "HERETIC_MAIN_ENDING_ESCAPE_FAILURE_FLAVOR",
                 desiredSortPosition = 30f,
-                unlockableDef = HereticPlugin.GetUnlockDef(typeof(HereticGlobalUnlock))
+                unlockableDef = null//HereticPlugin.GetUnlockDef(typeof(HereticGlobalUnlock))
             });
 
             #region lang fixes
